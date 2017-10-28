@@ -6,6 +6,7 @@ public class MainApp {
 		// TODO Auto-generated method stub
 		System.out.println(new PigLatin().convertWord("donia"));
 		
+		
 	}
 
 }
