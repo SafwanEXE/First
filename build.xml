@@ -66,49 +66,49 @@
 		
 	</target>
 	
-	
+
 	<jacoco:coverage>
-		<java classname="main.java.converter.MainApp" classpath="${result.javaclasses.dir}" fork="true" />
-	</jacoco:coverage>
-	
-	<jacoco:coverage>
-		<junit printsummary="true" haltonfailure="true" fork="true">
-					<classpath>
-						<path refid="NecessaryLibraries"></path>
-						<pathelement location="${result.javaclasses.dir}"/>
-						<pathelement location="${result.testclasses.dir}"/>
-					</classpath>
-					<formatter type="brief" usefile="false"/>
-					<batchtest > 
-						<fileset dir="${result.testclasses.dir}" >
-		                     <include name="**/*.class"/>
-							<!-- <include name="**/*Test.class"/>-->
-		                </fileset>
-					</batchtest>
-					
-				</junit>
-	</jacoco:coverage>
-	
-	<jacoco:report>
-		<executiondata>
-			<file name="jacoco.exec"/>
-		</executiondata>
-		<structure name="My Project PigLatin">
-			<classfiles>
-				<fileset dir="${result.javaclasses.dir}"/>
-				<fileset dir="${result.testclasses.dir}"/>
-			</classfiles>
-		    <sourcefiles encoding="UTF-8">
-                <fileset dir="${src.java.dir}"/>
-		    	 <fileset dir="${src.test.dir}"/>
-		    </sourcefiles>
-			
-		</structure>
-		<csv destfile="${result.dir}/result.csv"/>     
-        <html destdir="${result.dir}/result"/>
-		<xml destfile="${result.dir}/result.xml"/>
+			<java classname="main.java.converter.MainApp" classpath="${result.javaclasses.dir}" fork="true" />
+		</jacoco:coverage>
 		
-	</jacoco:report>
+		<jacoco:coverage>
+			<junit printsummary="true" haltonfailure="true" fork="true">
+						<classpath>
+							<path refid="NecessaryLibraries"></path>
+							<pathelement location="${result.javaclasses.dir}"/>
+							<pathelement location="${result.testclasses.dir}"/>
+						</classpath>
+						<formatter type="brief" usefile="false"/>
+						<batchtest > 
+							<fileset dir="${result.testclasses.dir}" >
+			                     <include name="**/*.class"/>
+								<!-- <include name="**/*Test.class"/>-->
+			                </fileset>
+						</batchtest>
+						
+					</junit>
+		</jacoco:coverage>
+		
+		<jacoco:report>
+			<executiondata>
+				<file name="jacoco.exec"/>
+			</executiondata>
+			<structure name="My Project PigLatin">
+				<classfiles>
+					<fileset dir="${result.javaclasses.dir}"/>
+					<fileset dir="${result.testclasses.dir}"/>
+				</classfiles>
+			    <sourcefiles encoding="UTF-8">
+	                <fileset dir="${src.java.dir}"/>
+			    	 <fileset dir="${src.test.dir}"/>
+			    </sourcefiles>
+				
+			</structure>
+			<csv destfile="${result.dir}/result.csv"/>     
+	        <html destdir="${result.dir}/result"/>
+			<xml destfile="${result.dir}/result.xml"/>
+			
+		</jacoco:report>
 				
 	<target name="clean" >
 			<delete dir="${result.javaclasses.dir}"> </delete>
