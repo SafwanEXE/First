@@ -13,6 +13,7 @@ public class PigLatin {
 		else {
 		_newWord=word.substring(1)+word.charAt(0)+"ay";
 		}
+		
 		return _newWord;
 	}
 
