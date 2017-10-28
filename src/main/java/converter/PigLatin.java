@@ -2,6 +2,7 @@ package main.java.converter;
 
 public class PigLatin {
 	
+	
 	public String convertWord(String word){
 		word=word.toLowerCase();
 		String _newWord=null;
