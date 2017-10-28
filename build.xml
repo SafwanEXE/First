@@ -1,5 +1,11 @@
 
-<project default="compile"> 
+<project default="compile" xmlns:jacoco="antlib:org.jacoco.ant"> 
+	
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath>
+			<pathelement location="./UsedLibraries/jacocoant.jar"></pathelement>
+		</classpath>
+	</taskdef>
 	
 	<property name="src.java.dir" location="./src/main/java/converter"/>
 	<property name="src.test.dir" location="./src/main/test"/>
@@ -7,6 +13,8 @@
 	<property name="result.javaclasses.dir" location="${result.dir}/classes"/>
 	<property name="result.testclasses.dir" location="${result.dir}/testclasses"/>
 	<property name="result.jar.file" location="./MyProduct.jar"/>
+
+
 
 	
 	<path id="NecessaryLibraries">
@@ -24,7 +32,7 @@
 	</target>
 	
 	<target name="compile-testcases" depends="compile">
-		<mkdir dir="result.testclasses.dir"/>
+		<mkdir dir="${result.testclasses.dir}"/>
 		<javac srcdir="${src.test.dir}"  destdir="${result.testclasses.dir}" debug="true" includeantruntime="false">
 			<classpath>
 				<path refid="NecessaryLibraries"/> 
@@ -38,7 +46,7 @@
 		<junit printsummary="true" haltonfailure="true" fork="true">
 			<classpath>
 				<path refid="NecessaryLibraries"></path>
-				<!--<pathelement location="${result.javaclasses.dir}"/>-->
+				<pathelement location="${result.javaclasses.dir}"/>
 				<pathelement location="${result.testclasses.dir}"/>
 			</classpath>
 			<formatter type="brief" usefile="false"/>
@@ -47,8 +55,8 @@
                      <include name="**/*Test.class"/>
                 </fileset>
 			</batchtest>
+			
 		</junit>
-		
 	</target>
 	<target name="jar" depends="compile">
 		<jar destfile="${result.jar.file}">
@@ -57,10 +65,58 @@
 		</jar>
 		
 	</target>
+	
+	
+	<jacoco:coverage>
+		<java classname="main.java.converter.MainApp" classpath="${result.javaclasses.dir}" fork="true" />
+	</jacoco:coverage>
+	
+	<jacoco:coverage>
+		<junit printsummary="true" haltonfailure="true" fork="true">
+					<classpath>
+						<path refid="NecessaryLibraries"></path>
+						<pathelement location="${result.javaclasses.dir}"/>
+						<pathelement location="${result.testclasses.dir}"/>
+					</classpath>
+					<formatter type="brief" usefile="false"/>
+					<batchtest > 
+						<fileset dir="${result.testclasses.dir}" >
+		                     <include name="**/*.class"/>
+							<!-- <include name="**/*Test.class"/>-->
+		                </fileset>
+					</batchtest>
+					
+				</junit>
+	</jacoco:coverage>
+	
+	<jacoco:report>
+		<executiondata>
+			<file name="jacoco.exec"/>
+		</executiondata>
+		<structure name="My Project PigLatin">
+			<classfiles>
+				<fileset dir="${result.javaclasses.dir}"/>
+				<fileset dir="${result.testclasses.dir}"/>
+			</classfiles>
+		    <sourcefiles encoding="UTF-8">
+                <fileset dir="${src.java.dir}"/>
+		    	 <fileset dir="${src.test.dir}"/>
+		    </sourcefiles>
+			
+		</structure>
+		<csv destfile="${result.dir}/result.csv"/>     
+        <html destdir="${result.dir}/result"/>
+		<xml destfile="${result.dir}/result.xml"/>
+		
+	</jacoco:report>
+				
 	<target name="clean" >
-		<delete dir="${result.javaclasses.dir}"> </delete>
-		<delete dir="${result.testclasses.dir}"> </delete>
+			<delete dir="${result.javaclasses.dir}"> </delete>
+			<delete dir="${result.testclasses.dir}"> </delete>
+		  <!--  <delete file="${result.dir}/result.csv"></delete>-->
+		
 	</target>
 	
+ 
 	
 </project>

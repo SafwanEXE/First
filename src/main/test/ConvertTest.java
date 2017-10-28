@@ -16,6 +16,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import main.java.converter.PigLatin;
+
 @RunWith(Parameterized.class)
 public class ConvertTest {
 	
